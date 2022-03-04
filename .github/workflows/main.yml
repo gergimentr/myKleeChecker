@@ -34,3 +34,16 @@ jobs:
           sudo python3 ./dev/code/myworker.py $JOB ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }}
       env:
         JOB: ${{ matrix.job }}
+ EndWorks:
+    runs-on: ubuntu-latest
+#    if: always()
+    needs: [ManyWorks] 
+    steps:
+      - name: rename file tasks
+        run: |
+          find . -type f -name './dev/files/*.c' -exec sh -c 'x="{}"; mv "$x" "${x}_"' \;
+          ls -al ./dev/files/
+      - name: start time
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
