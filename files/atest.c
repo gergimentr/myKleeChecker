@@ -3,7 +3,7 @@ int get_sign(int x) {
      return 0;
   
   if (x < 0)
-     return -1;
+     return -1
   else 
      return 1;
 } 
