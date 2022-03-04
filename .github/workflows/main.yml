@@ -46,13 +46,10 @@ jobs:
     - name: rename file tasks
       run: |
         (cd ./dev/files/&&find . -type f -name '*.c' -exec sh -c 'x="{}"; mv "$x" "${x}_"' \;)
-        rm -rf ./dev/files/*.c
     - name: push changes
       run: |
         cd dev
-        sudo git config --local user.email "${GITHUB_ACTOR}@gmail.com"
-        sudo git config --local user.name "${GITHUB_ACTOR}"
-        sudo git remote -v
-        sudo git add files/*
-        sudo git commit -m "rename result"
-        sudo git push "https://gergimentr:${{ secrets.ACCESS_TOKEN }}@github.com/gergimentr/myKleeChecker.git" HEAD:dev --force 
+        git config --global user.name 'gergimentr'
+        git config --global user.email 'gergimentr@gmail.com'
+        git commit -am "Automated report"
+        git push
