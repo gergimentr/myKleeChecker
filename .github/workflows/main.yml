@@ -51,5 +51,6 @@ jobs:
         cd dev
         git config --global user.name 'gergimentr'
         git config --global user.email 'gergimentr@gmail.com'
-        git commit -am "Automated report"
+        git add -A
+        git commit -m "Automated report"
         git push
