@@ -46,6 +46,7 @@ jobs:
     - name: rename file tasks
       run: |
         (cd ./dev/files/&&find . -type f -name '*.c' -exec sh -c 'x="{}"; mv "$x" "${x}_"' \;)
+        rm -rf ./dev/files/*.c
     - name: push changes
       run: |
         cd dev
