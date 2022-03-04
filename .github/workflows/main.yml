@@ -39,11 +39,18 @@ jobs:
 #    if: always()
     needs: [ManyWorks] 
     steps:
-      - name: rename file tasks
-        run: |
-          find . -type f -name './dev/files/*.c' -exec sh -c 'x="{}"; mv "$x" "${x}_"' \;
-          ls -al ./dev/files/
-      - name: start time
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v2
+      with:
+       ref: dev
+       path: dev
+    - name: rename file tasks
+      run: |
+        find . -type f -name './dev/files/*.c' -exec sh -c 'x="{}"; mv "$x" "${x}_"' \;
+        ls -al ./dev/files/
+    - name: push changes
+        sudo git config --local user.email "${GITHUB_ACTOR}@gmail.com"
+        sudo git config --local user.name "${GITHUB_ACTOR}"
+        sudo git remote -v
+        sudo git add files/*
+        sudo git commit -m "rename result"
+        sudo git push "https://gergimentr:${{ secrets.ACCESS_TOKEN }}@github.com/gergimentr/myKleeChecker.git" HEAD:dev --force 
