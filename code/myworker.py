@@ -37,11 +37,11 @@ commitText = "start work commit"
 down_git_branch(loginName,passName,repoName,folderName,branchName)
 os.system('rm -rf '+folderName+'*')
 os.system('cp '+fileForWork+' '+folderName)
-os.system('sudo chmod 777 '+fileForWork)
-os.system('sudo chmod 777 '+fileForWork+folderName)
-os.system('sudo docker run -t -v '+folderName+':/tmp/code --ulimit=\'stack=-1:-1\' klee/klee:2.1 /usr/bin/clang-6.0 -I /home/klee/klee_src/include -emit-llvm -c -g /tmp/code/'+fileForWork.split('/')[-1]+' -o /tmp/code/'+fileForWork.split('/')[-1])
+os.system('chmod 777 '+folderName)
+os.system('docker run -t -v '+folderName+':/tmp/code --ulimit=\'stack=-1:-1\' klee/klee:2.1 ls -al /tmp/code')
+os.system('docker run -t -v '+folderName+':/tmp/code --ulimit=\'stack=-1:-1\' klee/klee:2.1 /usr/bin/clang-6.0 -I /home/klee/klee_src/include -emit-llvm -c -g /tmp/code/'+fileForWork.split('/')[-1]+' -o /tmp/code/'+fileForWork.split('/')[-1])
 if os.path.exists(folderName+fileForWork.split('/')[-1]):
-    os.system('sudo timeout --signal=SIGKILL 18000 docker run -t -v /tmp/wklee/:/tmp/code --ulimit=\'stack=-1:-1\' klee/klee:2.1 /home/klee/klee_build/bin/klee --posix-runtime -libc=uclibc /tmp/code/'+fileForWork.split('/')[-1])
+    os.system('timeout --signal=SIGKILL 18000 docker run -t -v /tmp/wklee/:/tmp/code --ulimit=\'stack=-1:-1\' klee/klee:2.1 /home/klee/klee_build/bin/klee --posix-runtime -libc=uclibc /tmp/code/'+fileForWork.split('/')[-1])
 
 
 save_repo_branch_commit(loginName,passName,repoName,folderName,branchName,"end work commit")
