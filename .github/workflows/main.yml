@@ -45,10 +45,11 @@ jobs:
        path: dev
     - name: rename file tasks
       run: |
-        find . -type f -name './dev/files/*.c' -exec sh -c 'x="{}"; mv "$x" "${x}_"' \;
+        (cd ./dev/files/&&find . -type f -name '*.c' -exec sh -c 'x="{}"; mv "$x" "${x}_"' \;)
         ls -al ./dev/files/
     - name: push changes
       run: |
+        cd dev
         sudo git config --local user.email "${GITHUB_ACTOR}@gmail.com"
         sudo git config --local user.name "${GITHUB_ACTOR}"
         sudo git remote -v
