@@ -1,0 +1,36 @@
+name:  start workers
+on:
+  issues:
+    types: labeled
+  schedule:
+    - cron: 0 */8 * * *
+jobs:
+ StartWorks:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{steps.list_dirs.outputs.matrix}}
+    steps:  
+    - uses: actions/checkout@v2
+      with:
+       ref: dev
+       path: dev
+    - id: list_dirs
+      run: echo "::set-output name=matrix::$(ls $PWD/dev/files/*.c|jq -cnR '[inputs | select(length>0)]')"
+
+ ManyWorks:
+    runs-on: ubuntu-latest
+    needs: StartWorks
+    strategy:
+      fail-fast: false
+      matrix:
+        job: ${{fromJson(needs.StartWorks.outputs.matrix)}}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+       ref: dev
+       path: dev
+    - name: start $JOB
+      run: |
+          sudo python3 ./dev/code/myworker.py $JOB ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }}
+      env:
+        JOB: ${{ matrix.job }}
