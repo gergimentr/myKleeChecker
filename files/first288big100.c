@@ -307,7 +307,7 @@ int main() {
     size = written*6;
     char event_buf[size];  
     klee_make_symbolic(event_buf, sizeof(event_buf), "event_buf");
- 
+    
     offset = 0;
     flb_utils_write_str(event_buf, &offset, size, tmp_buf_ptr, written);
     klee_assume(offset>written*6);
