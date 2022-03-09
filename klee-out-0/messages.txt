@@ -1,0 +1,3 @@
+KLEE: Using STP solver backend
+KLEE: ERROR: /tmp/code/first288big100.c:313: invalid klee_assume call (provably false)
+KLEE: NOTE: now ignoring this error at this location

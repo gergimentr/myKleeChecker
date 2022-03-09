@@ -1,0 +1,9 @@
+Error: invalid klee_assume call (provably false)
+File: /tmp/code/first288big100.c
+Line: 313
+assembly.ll line: 9623
+Stack: 
+	#000009623 in __klee_posix_wrapped_main () at /tmp/code/first288big100.c:313
+	#100006984 in __user_main (=1, =94219705651808, =94219705651824) at /tmp/klee_src/runtime/POSIX/klee_init_env.c:245
+	#200000554 in __uClibc_main (=94219706947720, =1, =94219705651808, =0, =0, =0, =0) at libc/misc/internals/__uClibc_main.c:401
+	#300000721 in main (=1, =94219705651808)
